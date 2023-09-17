@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}my career{% endblock %}
+{% block content %}
+<ul>
+    <div class="container">
+        {% for career in careers %}
+        <div class="card" style="width: 1000px;display: block; margin-left: auto;margin-right: auto; margin-top: 20px;">
+            <div class="card-body">
+                <h5 class="card-title">{{ career.name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ career.years }}</h6>
+                <p class="card-text">{{ career.details }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</ul>
+{% endblock %}

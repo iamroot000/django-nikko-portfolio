@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}contact{% endblock %}
+{% block content %}
+<div class="container text-center">
+    <img class="profile-picture-sm" src="{% static 'img/profile.jpg' %}" alt="" style="margin-top: 50px; margin-bottom: 30px;">
+    <div class="contact-card-div" style="text-align: left !important; padding-left: 15%;"> 
+        <br>
+        <ul>
+            {% for contact in contacts %}
+                {% if contact.name == 'google' %}
+                    <i class="fa fa-{{ contact.name }} fa-{{ contact.name }}-style" style="font-size:36px"></i>{{ contact.link }}
+                    <br>
+                    <br>
+                {% else %}
+                    <i class="fa fa-{{ contact.name }} fa-{{ contact.name }}-style" style="font-size:36px"></i><a href="{{ contact.link }}">{{ contact.link }}</a>
+                    <br>
+                    <br>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}
