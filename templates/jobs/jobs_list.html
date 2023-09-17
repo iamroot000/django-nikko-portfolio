@@ -2,78 +2,56 @@
 {% load static %}
 {% block title %}Nikko{% endblock %}
 {% block content %}
-<div>
-    <div class="profile-div text-center">
-        <h1 class="greetings-h1">Welcome to My portfolio!</h1>
-        <img class="profile-picture" src="{% static 'img/profile.jpg' %}" alt="">
-        <p style="margin-left: 200px; margin-right: 200px; margin-top: 30px;">I'm Nikko, and I'm deeply passionate about Python development. 
-            Python's elegance and versatility have me hooked. 
-            Each day, I'm excited to tackle new challenges, build innovative solutions, 
-            and contribute to the dynamic Python community. 
-            Let's code and create together!</p>
-        </div>
-        
-        <div class="container text-center" style="padding-top: 5%;">
-            <div class="row">
-                {% for job in jobs %}
-                <div class="col" style="margin-bottom: 20px;">
-                    <div class="card mx-auto" style="width: 300px;">
-                        <img src="{{ job.image.url }}" class="card-img-top" alt="..." style="height: 200px;">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ job.title }}</h5>
-                            <p class="card-text">{{ job.summary|truncatechars:10 }}</p>
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop" data-job-url="{% url 'jobs.detail' job.pk %}">View Experience</button>
-                        </div>
+<div class="profile-div text-center">
+    <h1 class="greetings-h1">Welcome to My portfolio!</h1>
+    <img class="profile-picture" src="{% static 'img/profile.jpg' %}" alt="">
+    <p style="margin-left: 200px; margin-right: 200px; margin-top: 30px;">I'm Nikko, and I'm deeply passionate about Python development. 
+        Python's elegance and versatility have me hooked. 
+        Each day, I'm excited to tackle new challenges, build innovative solutions, 
+        and contribute to the dynamic Python community. 
+        Let's code and create together!</p>
+    </div>
+    
+    <div class="container text-center" style="padding-top: 5%;">
+        <div class="row">
+            {% for job in jobs %}
+            <div class="col" style="margin-bottom: 20px;">
+                <div class="card mx-auto" style="width: 300px;">
+                    <img src="{{ job.image.url }}" class="card-img-top" alt="..." style="height: 200px;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ job.title }}</h5>
+                        <p class="card-text">{{ job.summary|truncatechars:10 }}</p>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobModal{{ job.pk }}">View Experience</button>
                     </div>
                 </div>
-                {% endfor %}
+            </div>                
+            {% endfor %}
+        </div>
+    </div>
+</div>    
+
+
+<!-- Modal for JobsDetailView -->
+{% for job in jobs %}
+<div class="modal fade" id="jobModal{{ job.pk }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">{{ job.title }}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{ job.summary }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-    
-    <!-- Modal for JobsDetailView -->
-    
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Understood</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- <script>
-        $(document).ready(function () {
-            $('.view-experience').on('click', function () {
-                var jobUrl = $(this).data('job-url');
-                $.ajax({
-                    url: jobUrl,
-                    success: function (data) {
-                        $('#jobDetailModal .modal-body').html(data);
-                    }
-                });
-            });
-        });
-    </script> -->
-    
-    <script>
-        var myModal = document.getElementById('staticBackdrop');
-        var myInput = document.getElementById('myInput');
-        
-        myModal.addEventListener('shown.bs.modal', function () {
-            myInput.focus();
-        });
-    </script>    
-    
-    {% endblock %}
-    {% block script %}
-    {% endblock %}
+</div>
+{% endfor %}
+
+
+{% endblock %}
+{% block script %}
+{% endblock %}
